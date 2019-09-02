@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace CheckingLib
 {
     public static class Helper
     {
-        public static String EncodeFormUrlContent(IEnumerable<KeyValuePair<String, String>> Parameters)
+        public static String EncodeFormUrlContent(IDictionary<String, String> Parameters)
         {
             String data = "";
             KeyValuePair<String, String> Parameter;
