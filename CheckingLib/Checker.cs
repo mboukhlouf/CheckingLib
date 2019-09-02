@@ -7,8 +7,9 @@ using System.Net.Http.Headers;
 
 namespace CheckingLib
 {
-    public class Checker
+    public class Checker : IDisposable
     {
+        private bool disposed = false;
         private readonly HttpClientHandler ClientHandler;
         private readonly HttpClient Client;
         public readonly Variables Variables;
@@ -95,14 +96,34 @@ namespace CheckingLib
                     Body = await content.ReadAsStringAsync(),
                     Headers = headers
                 };
+                Message.Dispose();
                 return response;
             }
         }
 
-        ~Checker()
+        public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+                
+            }
             Client.Dispose();
             ClientHandler.Dispose();
+            disposed = true;
+        }
+
+        ~Checker()
+        {
+            Dispose(false);
         }
     }
 }
